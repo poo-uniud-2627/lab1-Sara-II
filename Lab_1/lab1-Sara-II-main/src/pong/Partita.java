@@ -27,7 +27,7 @@ class Partita {
         this.racchettaSinistra = new Racchetta(30, centroY);
         this.racchettaDestra = new Racchetta(campo.getLarghezza() - 30 - Racchetta.LARGHEZZA, centroY);
         this.palla = new Palla(campo.getLarghezza() / 2.0, campo.getAltezza() / 2.0);
-        this.livelli = new Livelli(2,  3, Lato.SINISTRA);
+        this.livelli = new Livelli(5,  3, Lato.SINISTRA);
     }
 
     // Quello che lo Schermo può chiedere sui conti: solo leggere. Il Punteggio resta qui dentro.
