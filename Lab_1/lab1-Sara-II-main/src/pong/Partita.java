@@ -6,7 +6,7 @@ import java.util.Random;
 /** Una partita: due giocatori, due racchette, una palla, e i conti di chi vince. */
 class Partita {
     /** Si gioca a 11, con almeno due punti di scarto (11 a 10 non basta, 12 a 10 sì). */
-    static final int PUNTI_PER_VINCERE = 3;
+    static final int PUNTI_PER_VINCERE = 11;
     static final int SCARTO_MINIMO = 2;
 
     private final Campo campo;
