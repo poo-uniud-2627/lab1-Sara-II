@@ -76,6 +76,9 @@ class Schermo extends JPanel {
         g2.drawString(String.valueOf(partita.getPunti(Lato.SINISTRA)), larghezza / 2 - 80, 60);
         g2.drawString(String.valueOf(partita.getPunti(Lato.DESTRA)), larghezza / 2 + 50, 60);
 
+        g2.drawString(String.valueOf(partita.getLivello()), larghezza / 2 + 50, altezza - 10);
+        g2.drawString(String.valueOf(partita.getVite()), larghezza / 2 - 80, altezza - 10);
+
         if (!partita.isInCorso()) {
             g2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 22));
             String messaggio;

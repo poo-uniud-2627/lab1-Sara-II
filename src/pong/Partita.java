@@ -6,7 +6,7 @@ import java.util.Random;
 /** Una partita: due giocatori, due racchette, una palla, e i conti di chi vince. */
 class Partita {
     /** Si gioca a 11, con almeno due punti di scarto (11 a 10 non basta, 12 a 10 sì). */
-    static final int PUNTI_PER_VINCERE = 11;
+    static final int PUNTI_PER_VINCERE = 3;
     static final int SCARTO_MINIMO = 2;
 
     private final Campo campo;
@@ -15,6 +15,7 @@ class Partita {
     private final Racchetta racchettaSinistra;
     private final Racchetta racchettaDestra;
     private final Palla palla;
+    private final Livelli livelli;
     private boolean iniziata;
     private final Punteggio punteggio = new Punteggio(PUNTI_PER_VINCERE, SCARTO_MINIMO);
 
@@ -26,12 +27,21 @@ class Partita {
         this.racchettaSinistra = new Racchetta(30, centroY);
         this.racchettaDestra = new Racchetta(campo.getLarghezza() - 30 - Racchetta.LARGHEZZA, centroY);
         this.palla = new Palla(campo.getLarghezza() / 2.0, campo.getAltezza() / 2.0);
+        this.livelli = new Livelli(2,  3, Lato.SINISTRA);
     }
 
     // Quello che lo Schermo può chiedere sui conti: solo leggere. Il Punteggio resta qui dentro.
 
     /** I punti del lato chi. */
     int getPunti(Lato chi) { return punteggio.getPunti(chi); }
+
+    int getLivello(){
+        return livelli.getLivello();
+    }
+
+     int getVite(){
+        return livelli.getVite();
+    }
 
     /** Chi ha vinto; null se la partita non è finita. */
     Lato getVincitore() { return punteggio.getVincitore(); }
@@ -42,6 +52,9 @@ class Partita {
     /** Rimette a zero i conti e lancia la palla. */
     void avvia() {
         punteggio.azzera();
+        if(!iniziata){
+            livelli.ricomincia();
+        }
         iniziata = true;
         palla.lancia(campo.getLarghezza() / 2.0, campo.getAltezza() / 2.0, new Random().nextBoolean());
     }
@@ -53,6 +66,7 @@ class Partita {
         palla.muovi();
         controllaRimbalzi();
         controllaPunto();
+    
     }
 
     /** Chiede a ciascun giocatore cosa vuole fare, e lo fa. Non sa chi sono i giocatori. */
@@ -89,6 +103,13 @@ class Partita {
     private void dopoIlPunto(boolean versoSinistra) {
         if (!punteggio.isFinita()) {
             palla.lancia(campo.getLarghezza() / 2.0, campo.getAltezza() / 2.0, !versoSinistra);
+            
+        }
+        else {
+            livelli.partitaFinita(getVincitore());
+            if (livelli.getVite() == 0) {
+                iniziata = false;
+            }
         }
     }
 

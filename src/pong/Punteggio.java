@@ -5,6 +5,7 @@ package pong;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * I conti di una partita: chi ha segnato, quanti punti ha ciascun lato, chi ha vinto.
  * La Partita gli dice chi ha fatto punto; lo Schermo chiede i punti alla Partita, che li chiede a lui.
@@ -17,7 +18,17 @@ import java.util.List;
  * Ogni metodo ha il suo contratto, nel commento sopra: cosa pretende, cosa promette.
  * I test ufficiali (cartella test) controllano i contratti.
  */
+
 public class Punteggio {
+
+   /*
+   - La storia non contiene elementi null.
+   - Non vengono aggiunti punti dopo la conclusione della partita.
+   - Il vincitore è eletto in base alla storia.
+   */
+   boolean repOK() {
+    return true;
+    }
 
     // scrivete qui i campi che vi servono
     private final int puntiPerVincere;
@@ -26,13 +37,22 @@ public class Punteggio {
     private int puntiSinistra = 0;
 
     private List<Lato> storia = new ArrayList<>();
-    
+   
+
+ 
+
     /**
      * Una partita nuova, 0 a 0, con la sua regola per vincere.
      * Pretende: puntiPerVincere è almeno 1; scartoMinimo è almeno 1.
      * Promette: una partita 0 a 0, non finita, senza vincitore e con la storia vuota.
      */
     public Punteggio(int puntiPerVincere, int scartoMinimo) {
+        if (puntiPerVincere < 1 ){
+            throw new IllegalArgumentException("puntiPerVincere deve essere maggiore di 1");
+        }
+        if (scartoMinimo < 1 ){
+            throw new IllegalArgumentException("scartoMinimo deve essere maggiore di 1");
+        }
         this.puntiPerVincere = puntiPerVincere;
         this.scartoMinimo = scartoMinimo;
     }
@@ -46,6 +66,10 @@ public class Punteggio {
      *           Se la partita era già finita, non cambia niente.
      */
     public void segnaPunto(Lato chi) {
+        if(chi == null) {
+            throw new IllegalArgumentException("Lato non può essere null");
+        }
+        
         if(!isFinita()){
             if(chi == Lato.DESTRA){
                 puntiDestra++;
@@ -63,6 +87,9 @@ public class Punteggio {
      * Promette: i punti del lato chi. Non cambia niente.
      */
     public int getPunti(Lato chi) {
+        if(chi == null) {
+            throw new IllegalArgumentException("Lato non può essere null");
+        }
         if(Lato.DESTRA == chi)
             return puntiDestra;
         if(Lato.SINISTRA == chi)

@@ -12,7 +12,8 @@ public class Main {
         Giocatore sinistra = new GiocatoreTastiera(tastiera, KeyEvent.VK_W, KeyEvent.VK_S);
         Giocatore destra = new GiocatoreTastiera(tastiera, KeyEvent.VK_UP, KeyEvent.VK_DOWN);
         // Per giocare contro il giocatore automatico (a sinistra), togliete le due barre:
-        // sinistra = new GiocatoreAutomatico();
+        //
+        destra = new GiocatoreAutomatico();
 
         Partita partita = new Partita(new Campo(800, 500), sinistra, destra);
         Schermo.mostra(partita, tastiera);
